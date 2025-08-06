@@ -1,30 +1,11 @@
-import { gql, useQuery } from "@apollo/client";
-
-const GET_PROJECTS = gql`
-  query {
-    projects {
-      name
-    }
-  }
-`;
-
+import ProjectList from "./components/ProjectList";
+import FeaturedProjects from "./components/FeaturedProjects";
 function App() {
-  const { loading, error, data } = useQuery(GET_PROJECTS);
-
-  if (loading) return <p>Loading projects...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
   return (
     <div>
-      <h1>Projects</h1>
-      <ul>
-        {data.projects.map((project) => (
-          <li>
-            <strong>{project.name}</strong>:
-          </li>
-        ))}
-      </ul>
-      {console.log(data)}
+      <h1>Apollo Client Mastery</h1>
+      {/* <ProjectList /> */}
+      <FeaturedProjects />
     </div>
   );
 }
