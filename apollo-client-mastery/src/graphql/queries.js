@@ -9,3 +9,13 @@ export const GET_PROJECTS = gql`
     }
   }
 `;
+
+export const GET_PROJECT_BY_ID = gql`
+  query GetProjectById($id: ID!) {
+    project(id: $id) {
+      id
+      name
+      description
+    }
+  }
+`;

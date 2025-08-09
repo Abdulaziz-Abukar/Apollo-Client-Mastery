@@ -12,7 +12,7 @@ let projects = [
   {
     id: "2",
     name: "BugStack Clone",
-    description: "The real backend you’ll build later",
+    description: "The real backend you will build later",
   },
 ];
 
@@ -26,10 +26,12 @@ const typeDefs = gql`
 
   type Query {
     projects: [Project!]!
+    project(id: ID!): Project
   }
 
   type Mutation {
     addProject(name: String!, description: String!): Project!
+    updateProject(id: ID!, name: String!, description: String!): Project!
   }
 `;
 
@@ -37,6 +39,10 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     projects: () => projects,
+    project: (_, { id }) => {
+      const project = projects.find((project) => project.id === id);
+      return project;
+    },
   },
   Mutation: {
     addProject: (_, { name, description }) => {
@@ -47,6 +53,17 @@ const resolvers = {
       };
       projects.push(newProject);
       return newProject;
+    },
+    updateProject: (_, { id, name, description }) => {
+      const projectIndex = projects.findIndex((p) => p.id === id);
+
+      if (projectIndex === -1) {
+        throw new Error("Project not found");
+      }
+
+      const updateProject = { ...projects[projectIndex], name, description };
+      projects[projectIndex] = updateProject;
+      return updateProject;
     },
   },
 };
